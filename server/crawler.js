@@ -13,7 +13,21 @@ const puppeteer = require('puppeteer');
     await page.waitFor('#react-autowhatever-1--item-0 > a')
     await page.click('#react-autowhatever-1--item-0 > a')
     await page.waitFor('#title-overview-widget > div.vital > div.title_block > div > div.titleBar > div.title_wrapper > h1')
-    await page.screenshot({ path: 'screenshot.png' })
+    
+    let data = await page.evaluate(() => {
+
+        let details = {}
+         details.title = document.querySelector('#title-overview-widget > div.vital > div.title_block > div > div.titleBar > div.title_wrapper > h1').innerText;
+         details.rating = document.querySelector('#title-overview-widget > div.vital > div.title_block > div > div.ratings_wrapper > div.imdbRating > div.ratingValue > strong > span').innerText;
+         
+         return details
+   
+    })
+
+
+
     browser.close()
-    console.log('See screenshot')
+
+    console.log(data)
+   
    })()
